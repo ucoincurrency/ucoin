@@ -170,9 +170,7 @@ contract TRC20Token is Owned, TRC20 {
 
 }
 
-contract UCoinToken is TRC20Token {
-    string public constant name = "UCoin";
-    string public constant symbol = "UCoin";
+contract UCoin is TRC20Token {
     uint public constant decimals = 18;
 
     constructor () public  {
