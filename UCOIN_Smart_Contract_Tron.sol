@@ -58,9 +58,7 @@ contract TRC20Interface {
   function approve(address _spender, uint _value) public returns (bool);
   function setFrozenAccount(address _to, bool _status) public returns (bool); 
   function mint(address _to, uint _value) public payable  returns (bool);
-  function mint_supply(address _to, uint _value) public payable  returns (bool);
-  function burn(address _from, uint256 _value) public payable  returns (bool);
-  function burn_supply(address _from, uint256 _value) public payable returns (bool);
+  function burn(address _from, uint256 _value) public payable returns (bool);
   event Transfer(address indexed from, address indexed to, uint value);
   event Approval(address indexed owner, address indexed spender, uint value);
 
@@ -140,26 +138,11 @@ contract TRC20Token is Owned, TRC20 {
     require(_to != address(0));
     require(frozen[_to] != true);
     balances[_to] = balances[_to].add(_value);
-    return true;
-  }
-
-  function mint_supply(address _to, uint _value) public payable onlyOwner returns (bool success) {
-    require(_to != address(0));
-    require(frozen[_to] != true);
-    balances[_to] = balances[_to].add(_value);
     totalSupply = totalSupply.add(_value);
     return true;
   }
 
-  function burn(address _from, uint256 _value) public payable onlyOwner returns (bool success) {
-    require(_from != address(0));
-    require(frozen[_from] != true);
-    require(balances[_from] >= _value);  
-    balances[_from] = balances[_from].sub(_value);
-    return true;
-  }
-
-  function burn_supply(address _from, uint256 _value) public payable onlyOwner returns (bool success)  {
+  function burn(address _from, uint256 _value) public payable onlyOwner returns (bool success)  {
     require(_from != address(0));
     require(frozen[_from] != true);
     require(balances[_from] >= _value);  
